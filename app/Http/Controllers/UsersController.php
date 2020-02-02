@@ -6,6 +6,7 @@ use App\Users;
 use PhpParser\Node\Name;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UsersController extends Controller
 {
@@ -19,6 +20,36 @@ class UsersController extends Controller
     {
         $users = Users::getAllUsers();
         return $users;
+    }
+
+    public function refreshToken() 
+    {
+        try {
+
+            $newToken = auth('api')->refresh();
+        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
+
+        return response()->json(['token' => $newToken]);
+    }
+
+    public function getAuthenticatedUser()
+    {
+        try {
+            if (! $user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['error' => 'user not found'], 404);
+            }
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['error' => 'token expired'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['error' => 'token invalid'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['error' => 'token absent'], $e->getStatusCode());
+        }
+
+        // the token is valid and we have found the user via the sub claim
+        return response()->json(compact('user'));
     }
 
 
@@ -41,10 +72,10 @@ class UsersController extends Controller
      * @param  \App\Users  $users
      * @return \Illuminate\Http\Response
      */
-   //Update User
+    //Update User
     public function updateUser(Request $request)
     {
-         $updates = Users::updateUser($request->name, $request->email, $request->is_authorized, $request->auth_lvl, $request->id);
+        $updates = Users::updateUser($request->name, $request->email, $request->is_authorized, $request->auth_lvl, $request->id);
         return $updates;
     }
     
@@ -57,23 +88,18 @@ class UsersController extends Controller
      */
     public function destroy(Request $request)
     {
-       $delete = Users::deleteUser($request->id);
-       return $delete;
+        $delete = Users::deleteUser($request->id);
+        return $delete;
     }
 
     public function promptAuth(Request $request)
     {
         $passcode = DB::table('passcodes')->where('is_active', 1)->value('passcode');
 
-        if($request->passcode == $passcode)
-        {
-
-           $user = DB::table('users')->where('email', $request->email)->update(['is_authorized' => 1]);
-           return $user;
-
-
-        }
-        else {
+        if ($request->passcode == $passcode) {
+            $user = DB::table('users')->where('email', $request->email)->update(['is_authorized' => 1]);
+            return $user;
+        } else {
             return response()->json('Incorrect passcode.', 200);
         }
     }

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use App\Http\Controllers\Controller;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Auth\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -43,27 +44,26 @@ class LoginController extends Controller
 
     protected function signin(Request $request)
     {
-        // if not logged in
-        if (!Auth::check()) {
-            $request->validate([
-                'email' => ['required', 'string', 'email', 'max:255'],
-                'password' => ['required', 'string', 'min:8'],
-            ]);
-            $user = User::where('email', '=', $request->email)->first();
-            // if email exists
-            if ($user) {
-                $password = Hash::check($request->password, $user->password);
-                if ($password) {
-                    Auth::login($user);
-                    return response()->json($user->only(['id', 'name', 'email', 'is_authorized', 'auth_lvl']), 200);
-                }
-            }
-            if (!$user || !$password) {
-                return response()->json('invalid', 200);
-            } else {
-                // will be used to redirect if a user is already logged in
-                return response()->json('LoggedIn', 200);
-            }
+        $creds = $request->only(['email', 'password']);
+        
+        if (!$token = auth('api')->attempt($creds)) {
+            return response()->json(['error' => 'Incorrect credentials'], 401);
         }
+        return response()->json(['token' => $token, 'user' => auth('api')->user()]);
+    }
+
+    protected function signout(Request $request)
+    {
+        $token = JWTAuth::getToken();
+        try {
+            JWTAuth::invalidate($token);
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['error' => 'token expired'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['error' => 'token invalid'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['error' => 'token absent'], $e->getStatusCode());
+        }
+        return response()->json(['message' => "Successfully logged out"]);
     }
 }

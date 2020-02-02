@@ -47,4 +47,5 @@ class Users extends Model
         //return $user_id;
         return DB::table('users')->where('id', '=', $user_id)->delete();
     }
+
 }//end model

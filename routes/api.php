@@ -17,12 +17,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
 Route::post('/products/check', 'ProductsController@checkIfSame');
 
 
 //Logins/Register
 Route::post('/signin', 'Auth\LoginController@signin')->middleware('api_token');
 Route::post('/signup', 'Auth\RegisterController@signup')->middleware('api_token');
+Route::post('/signout', 'Auth\LoginController@signout')->middleware('api_token');
 
 //Users
 Route::get('/users', 'UsersController@index');
@@ -30,6 +33,8 @@ Route::post('/users/create', 'UsersController@store');
 Route::post('/users/update', 'UsersController@updateUser');
 Route::post('/users/delete', 'UsersController@destroy');
 Route::post('/users/prompt', 'UsersController@promptAuth');
+Route::post('/users/getAuthedUser', 'UsersController@getAuthenticatedUser');
+Route::post('/users/refresh', 'UsersController@refreshToken');
 
 //Makes a route to call a function of a specific class
 
