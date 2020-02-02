@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Users;
+use PhpParser\Node\Name;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class UsersController extends Controller
+{
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $users = Users::getAllUsers();
+        return $users;
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $store = Users::CreateUser($request->name, $request->email, $request->password, $request->is_authorized, $request->auth_lvl);
+        return $store;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Users  $users
+     * @return \Illuminate\Http\Response
+     */
+   //Update User
+    public function updateUser(Request $request)
+    {
+         $updates = Users::updateUser($request->name, $request->email, $request->is_authorized, $request->auth_lvl, $request->id);
+        return $updates;
+    }
+    
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Users  $users
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+       $delete = Users::deleteUser($request->id);
+       return $delete;
+    }
+
+    public function promptAuth(Request $request)
+    {
+        $passcode = DB::table('passcodes')->where('is_active', 1)->value('passcode');
+
+        if($request->passcode == $passcode)
+        {
+
+           $user = DB::table('users')->where('email', $request->email)->update(['is_authorized' => 1]);
+           return $user;
+
+
+        }
+        else {
+            return response()->json('Incorrect passcode.', 200);
+        }
+    }
+}
