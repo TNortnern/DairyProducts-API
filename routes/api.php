@@ -57,7 +57,7 @@ Route::post('/categories/create', 'CategoriesController@store');
 Route::post('/categories/delete', 'CategoriesController@destroy');
 Route::post('/categories/update', 'CategoriesController@update');
 
-//Productsc
+//Products
 Route::get('/products', 'ProductsController@index');
 Route::post('/products/store', 'ProductsController@store');
 Route::post('/products/delete', 'ProductsController@delete');
