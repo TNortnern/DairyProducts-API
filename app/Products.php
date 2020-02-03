@@ -25,7 +25,7 @@ class Products extends Model
                 ['categories.is_active', '=', 1],
             ])
             ->orderBy('products.id', 'ASC')
-            ->paginate(8);
+            ->paginate(10);
         return $products;
     }
 

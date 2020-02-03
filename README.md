@@ -21,10 +21,14 @@ POST ep
 Required fields are
 
 Product name as *name* 
+
 Image as *imagename* 
-Category as *category* (foriegn key to categories table)
+
+Category as *category* (foreign key to categories table id)
+
 description as *description* 
-sizes  as *size* (foreign key to sizes table)
+
+sizes  as *size* (foreign key to sizes table id)
 
 POST ('ep/delete')
 
@@ -51,6 +55,7 @@ POST ep
 Required fields are
 
 Category name as *catname*
+
 description as *catdescription* 
 
 POST ('ep/delete')
@@ -105,7 +110,7 @@ POST ep/create
 
 Required fields are
 
-sizes as *size*sizes as *size*(note: sizes are expected to come in seperated by asteriks e.g. S * M * L * XL, with no spaces between the asteriks)
+sizes as *size*(note: sizes are expected to come in seperated by asteriks e.g. S * M * L * XL, with no spaces between the asteriks)
 
 
 Update a size blueprint
