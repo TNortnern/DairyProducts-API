@@ -44,6 +44,11 @@ class LoginController extends Controller
 
     protected function signin(Request $request)
     {
+        $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string'],
+        ]);
+
         $creds = $request->only(['email', 'password']);
         
         if (!$token = auth('api')->attempt($creds)) {

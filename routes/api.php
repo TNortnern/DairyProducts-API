@@ -23,7 +23,7 @@ Route::post('/products/check', 'ProductsController@checkIfSame');
 
 
 //Logins/Register
-Route::post('/signin', 'Auth\LoginController@signin')->middleware('api_token');
+Route::post('/signin', 'Auth\LoginController@signin');
 Route::post('/signup', 'Auth\RegisterController@signup')->middleware('api_token');
 Route::post('/signout', 'Auth\LoginController@signout')->middleware('api_token');
 
