@@ -1,124 +1,738 @@
-Dairy Products API Documentation
+# Dairy Products API Documentation
 
-**Products**
+# Contents
 
-ep(endpoint): /api/products
+* [Products](#products)
+    * [Get all Products](#get-all-products)
+    * [Create a Product](#create-a-product)
+    * [Delete a Product](#delete-a-product)
+    * [Update a Product](#update-a-product)
+* [Categories](#categories)
+    * [Get all Categories](#get-all-categories)
+    * [Create a Category](#create-a-category)
+    * [Delete a Category](#delete-a-category)
+    * [Update a Category](#update-a-category)
+* [Authentication](#authentication)
+    * [Sign in](#sign-in)
+    * [Sign up](#sign-up)
+    * [Sign out](#sign-out)
+* [Users](#users)
+    * [Get a User](#get-a-user)
+    * [Refresh a User Token](#refresh-a-user-token)
+* [Sizes](#sizes)
+    * [Get all Sizes](#get-all-sizes)
+    * [Create a Size](#create-a-size)
+    * [Update a Size](#update-a-size)
+    * [Delete a Size](#delete-a-size)
 
-Getting all Products
+# Products
+*[Back to Top](#contents)*
 
-GET ep
+## Get all products
+*[Back to Top](#contents)*
 
-This will return a list of products, paginated, 10 per page
+* **URL**
 
-You can specify the page number as a param e.g.
+    `/api/products`
 
-GET ('url/api/products?page=#')
+* **Method**
 
-Creating a Product
+    `GET`
 
-POST ep
+* **URL Params**
 
-Required fields are
+    **Optional:**
 
-Product name as *name* 
+    Retrieve a list of 10 products, supports pagination
 
-Image as *imagename* 
+    `page=[alphanumeric]`
 
-Category as *category* (foreign key to categories table id)
+* **Data Params**
 
-description as *description* 
+    N/A
 
-sizes  as *size* (foreign key to sizes table id)
+* **Success Response**
 
-POST ('ep/delete')
+    * **Code**: ???
 
-*id* required
+      **Content**: { ??? }
 
-POST ('ep/update')
+* **Error Response**
 
-*id* required
+    * **Code**: ???
 
-**Categories**
+      **Content**: { ??? }
 
-ep(endpoint): /api/categories
+* **Example Call**
 
-Getting all Categories
+    ```
+    $.ajax({
+        ???
+    })
+    ```
 
-GET ep
+## Create a Product
+*[Back to Top](#contents)*
 
-This will return a list of categories
+* **URL**
 
-Creating a Category
+    `??`
 
-POST ep
+* **Method**
 
-Required fields are
+    `POST`
 
-Category name as *catname*
+* **URL Params**
 
-description as *catdescription* 
+    N/A
 
-POST ('ep/delete')
+* **Data Params**
 
-*id* required
+    **Required**:
 
-POST ('ep/update')
+    `name` | `data type` - The product name
 
-*id* required
+    `imagename` | data type - The image, what image and is it a name?
 
-**Authentication**
+    `category` | data type - The foreign key, categorises the table ID
 
-Signing up
+    `description` | data type - Description of the product
 
-POST ('url/api/signup')
+    `size` | data type - What does this do? Foreign key to the `sizes` table ID
 
-Signing in
+* **Success Response**
 
-POST ('url/api/signin')
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ???
+    })
+    ```
+
+## Delete a Product
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/products/delete`
+
+* **Method**
+
+    `POST`
+
+* **URL Params**
+
+    N/A
+
+* **Data Params**
+
+    **Required**:
+
+    `id` | `data type` - Id of the product to delete
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ???
+    })
+
+## Update a Product
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/products/update`
+
+* **Method**
+
+    `POST`
+
+* **URL Params**
+
+    N/A
+
+* **Data Params**
+
+    **Required**:
+
+    `id` | `data type` - Id of the product to delete
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ???
+    })
+    ```
+
+# Categories
+*[Back to Top](#contents)*
+
+## Get all Categories
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/categories`
+
+* **Method**
+
+    `GET`
+
+* **URL Params**
+
+    ??
+
+* **Data Params**
+
+    ??
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ...
+    })
+
+## Create a Category
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/categories/create`
+
+* **Method**
+
+    `POST`
+
+* **URL Params**
+
+    N/A
+
+* **Data Params**
+
+    **Required**:
+
+    `catname` | `data type` - Name of the category
+
+    `catdescription` | `data type` - Description for the category
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ...
+    })
+
+## Delete a Category 
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/categories/delete`
+
+* **Method**
+
+    `POST`
+
+* **URL Params**
+
+    N/A
+
+* **Data Params**
+
+    **Required**:
+
+    `id` | `data type` - Id of the product to delete
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ??
+    })
+
+## Update a Category
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/categories/update`
+
+* **Method**
+
+    `POST`
+
+* **URL Params**
+
+    N/A
+
+* **Data Params**
+
+    **Required**:
+
+    ???
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ...
+    })
+
+# Authentication
+*[Back to Top](#contents)*
+
+## Sign up
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/signup`
+
+* **Method**
+
+    `POST`
+
+* **URL Params**
+
+    ???
+
+* **Data Params**
+
+    **Required**:
+
+    ???
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ...
+    })
+
+## Sign in
+*[Back to Top](#contents)*
 
 This will create and assign the user a token, this token will handle identifying logged in users but it expires after 24hours and will require a token refresh if you want to keep the user authenticated
 
-Signing Out
+* **URL**
 
-POST ('url/api/signout')
+    `/api/signin`
 
-getting user by token
+* **Method**
 
-POST ('url/api/users/getAuthedUser')
+    `POST`
 
-*Bearer Token required*
+* **URL Params**
 
-This will give you all details about a user except the password and id should the user be authenticated
+    ???
 
-refreshing the token
+* **Data Params**
 
-POST ('url/api/users/refresh')
+    **Required**:
 
-*Bearer Token required*
+    ???
 
-**Sizes**
+* **Success Response**
 
-ep: ('url/api/sizes')
+    * **Code**: ???
 
-GET ep
+      **Content**: { ?? }
 
-Returns a list of all sizes
+* **Error Response**
 
-Creating a new size blueprint
+    * **Code**: ???
 
-POST ep/create
+      **Content**: { ?? }
 
-Required fields are
+* **Example Call**
 
-sizes as *size*(note: sizes are expected to come in seperated by asteriks e.g. S * M * L * XL, with no spaces between the asteriks)
+    ```
+    $.ajax({
+        ...
+    })
 
+## Sign out
+*[Back to Top](#contents)*
 
-Update a size blueprint
+* **URL**
 
-POST ep/delete
+    `/api/signout`
 
-*id* is required
+* **Method**
 
-POST ep/update
+    `POST`
 
-*id* is required
+* **URL Params**
+
+    ???
+
+* **Data Params**
+
+    **Required**:
+
+    ???
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ...
+    })
+
+# Users
+*[Back to Top](#contents)*
+
+## Get a user
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/users/getAuthedUsers`
+
+* **Method**
+
+    `POST`
+
+* **URL Params**
+
+    ???
+
+* **Data Params**
+
+    **Required**:
+
+    Bearer token ???
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ...
+    })
+
+## Refresh a User Token
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/users/refresh`
+
+* **Method**
+
+    `POST`
+
+* **URL Params**
+
+    ???
+
+* **Data Params**
+
+    **Required**:
+
+    Bearer token ???
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ...
+    })
+
+# Sizes
+*[Back to Top](#contents)*
+
+## Get all Sizes
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/sizes`
+
+* **Method**
+
+    `GET`
+
+* **URL Params**
+
+    ???
+
+* **Data Params**
+
+    **Required**:
+
+    ???
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ...
+    })
+
+## Create a Size
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/sizes/create`
+
+* **Method**
+
+    `POST`
+
+* **URL Params**
+
+    N/A
+
+* **Data Params**
+
+    **Required**:
+
+    `size` | `data type` - List of sizes seperated by asterisks
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ...
+        data: { size: 'M*L*XXL' }
+    })
+
+## Update a Size
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/size/update`
+
+* **Method**
+
+    `POST`
+
+* **URL Params**
+
+    ???
+
+* **Data Params**
+
+    **Required**:
+
+    `id` | `data type` - Id of the size to update
+    What else?
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ...
+    })
+
+## Delete a Size
+*[Back to Top](#contents)*
+
+* **URL**
+
+    `/api/sizes/delete`
+
+* **Method**
+
+    `POST`
+
+* **URL Params**
+
+    ???
+
+* **Data Params**
+
+    **Required**:
+
+    `id` | `data type` - Id of the size to delete
+
+* **Success Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Error Response**
+
+    * **Code**: ???
+
+      **Content**: { ?? }
+
+* **Example Call**
+
+    ```
+    $.ajax({
+        ...
+    })
