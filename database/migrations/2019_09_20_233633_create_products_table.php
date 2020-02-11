@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('image');
             $table->unsignedBigInteger('sizes');
             $table->double('price');
+            $table->integer('featured')->default(0);
             $table->string('description');
             $table->boolean('is_active')->default(1);
             // foreign key
