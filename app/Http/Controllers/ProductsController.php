@@ -12,10 +12,10 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // call Model function to return all products, make your migrations next
-        $products = Products::getAllProducts();
+        $products = Products::getAllProducts($request->term);
         return $products;
     }
 

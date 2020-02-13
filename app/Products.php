@@ -14,18 +14,32 @@ class Products extends Model
     protected $guarded = [];
 
 
-    public static function getAllProducts()
+    public static function getAllProducts($term)
     {
-        $products = DB::table('sizes')
+        if ($term) {
+            $products = DB::table('sizes')
             ->join('products', 'sizes.id', '=', 'products.sizes')
             ->join('categories', 'products.category', '=', 'categories.id')
             ->select('products.*', 'categories.catname', 'categories.catimage', 'categories.catdescription', 'sizes.size')
             ->where([
                 ['products.is_active', '=', 1],
                 ['categories.is_active', '=', 1],
+                ['products.name', 'like', '%'. $term . '%']
             ])
             ->orderBy('products.id', 'ASC')
             ->paginate(10);
+        } else {
+            $products = DB::table('sizes')
+                ->join('products', 'sizes.id', '=', 'products.sizes')
+                ->join('categories', 'products.category', '=', 'categories.id')
+                ->select('products.*', 'categories.catname', 'categories.catimage', 'categories.catdescription', 'sizes.size')
+                ->where([
+                    ['products.is_active', '=', 1],
+                    ['categories.is_active', '=', 1],
+                ])
+                ->orderBy('products.id', 'ASC')
+                ->paginate(10);
+        }
         return $products;
     }
 
@@ -36,7 +50,7 @@ class Products extends Model
             'name' => $name,
             'category' => $category,
             'image' => $image,
-            'description' => $desc, 
+            'description' => $desc,
             'price' => 0,
             'sizes' => $size
         ]);
@@ -57,8 +71,8 @@ class Products extends Model
     public static function updateProduct($name, $image, $desc, $id, $category, $size)
     {
         if (empty($image)) {
-             $updates = DB::table('products')->where('id', $id)->update([
-            'name' => $name, 'description' => $desc, 
+            $updates = DB::table('products')->where('id', $id)->update([
+            'name' => $name, 'description' => $desc,
             'category' => $category, 'sizes' => $size]);
             return response()->json($updates);
         }
