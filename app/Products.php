@@ -44,14 +44,14 @@ class Products extends Model
     }
 
 
-    public static function addProduct($name, $image, $category, $desc, $size)
+    public static function addProduct($name, $image, $category, $desc, $size, $price)
     {
         $products = DB::table('products')->insert([
             'name' => $name,
             'category' => $category,
             'image' => $image,
             'description' => $desc,
-            'price' => 0,
+            'price' => $price,
             'sizes' => $size
         ]);
         $newProduct = DB::table('sizes')
@@ -68,17 +68,17 @@ class Products extends Model
         return $products;
     }
 
-    public static function updateProduct($name, $image, $desc, $id, $category, $size)
+    public static function updateProduct($name, $image, $desc, $id, $category, $size, $price)
     {
         if (empty($image)) {
             $updates = DB::table('products')->where('id', $id)->update([
             'name' => $name, 'description' => $desc,
-            'category' => $category, 'sizes' => $size]);
+            'category' => $category, 'sizes' => $size, 'price' => $price]);
             return response()->json($updates);
         }
         $updates = DB::table('products')->where('id', $id)->update([
             'name' => $name, 'image' => $image,
-            'description' => $desc, 'category' => $category, 'sizes' => $size
+            'description' => $desc, 'category' => $category, 'price' => $price, 'sizes' => $size
         ]);
         $updatedProduct = DB::table('sizes')
         ->where('products.id', $id)

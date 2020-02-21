@@ -51,7 +51,7 @@ class ProductsController extends Controller
         $path = $file->move(public_path('/uploads'), $name);
         $imagename = "http://trayvonnorthern.com/Edgewood-API/public/uploads/$name";
         // return $imagename;
-        $products = Products::addProduct($request->name, $imagename, $request->category, $request->description, $request->size);
+        $products = Products::addProduct($request->name, $imagename, $request->category, $request->description, $request->size, $request->price);
         return $products;
     }
 
@@ -65,7 +65,7 @@ class ProductsController extends Controller
     public function update(Request $request)
     {
         if (!$request->hasFile('photo')) {
-            $products = Products::updateProduct($request->name, '', $request->description, $request->id, $request->category, $request->size);
+            $products = Products::updateProduct($request->name, '', $request->description, $request->id, $request->category, $request->size, $request->price);
             return $products;
         } else {
             $file = $request->file('photo');
@@ -75,7 +75,7 @@ class ProductsController extends Controller
             $path = $file->move(public_path('/uploads'), $name);
             $imagename = "http://trayvonnorthern.com/Edgewood-API/public/uploads/$name";
 
-            $products = Products::updateProduct($request->name, $imagename, $request->description, $request->id, $request->category, $request->size);
+            $products = Products::updateProduct($request->name, $imagename, $request->description, $request->id, $request->category, $request->size, $request->price);
             return $products;
         }
     }
